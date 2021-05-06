@@ -4,8 +4,7 @@ import { schema } from './schema'
 
 const server = new ApolloServer({
   schema: schema,
-  context: context,
-  mocks: true
+  context: context
 })
 
 server.listen().then(() => {
