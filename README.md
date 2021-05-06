@@ -13,7 +13,17 @@ Stack:
 ```npm install``` or ```yarn``` 
 
 ### 2. Create Database
-```npx prisma migrate dev```
+Create .env file with
+```
+DATABASE_URL="file:./dev.db"
+
+JWT_SECRET="YOUR_JWT_SECRET_KEY"
+```
+
+Start Migration
+```
+npx prisma migrate dev
+```
 
 ### 3. Start the GrahpQL Server
 ```npm run dev``` or ```yarn dev```
