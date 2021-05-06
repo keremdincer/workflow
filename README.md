@@ -1,0 +1,22 @@
+# Workflow
+
+Stack:
+
+- Apollo Server
+- Prisma Client
+- Prisma Migrate
+- SQLite
+
+## Bootstrap
+
+### 1. Install Packages
+```npm install``` or ```yarn``` 
+
+### 2. Create Database
+```npx prisma migrate dev```
+
+### 3. Start the GrahpQL Server
+```npm run dev``` or ```yarn dev```
+
+## Using the GraphQL API
+Navigate to [http://localhost:4000](http://localhost:4000) in your browser to explore the API of your GraphQL server in a GraphQL Playground.
