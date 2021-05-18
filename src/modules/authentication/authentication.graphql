@@ -1,0 +1,24 @@
+directive @auth on FIELD_DEFINITION
+directive @hasRole(roles: [String!]) on FIELD_DEFINITION | FIELD
+
+extend type Query {
+  me: User @auth
+}
+
+extend type Mutation {
+  login(email: String!, password: String!): LoginPayload!
+  register(data: RegisterInput!): User
+  refresh(token: String!): LoginPayload!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  firstName: String!
+  lastName: String!
+}
+
+type LoginPayload {
+  accessToken: String!
+  refreshToken: String!
+}

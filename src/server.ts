@@ -1,6 +1,7 @@
+import 'graphql-import-node'
 import { ApolloServer } from 'apollo-server'
+import { schema } from './application'
 import { context } from './context'
-import { schema } from './schema'
 
 const server = new ApolloServer({
   schema: schema,

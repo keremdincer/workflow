@@ -1,0 +1,31 @@
+type Query {
+  users: [User!]! @auth @hasRole(roles: ["ADMIN"])
+  user(id: Int!): User @auth @hasRole(roles: ["ADMIN"])
+  roles: [Role!]! @auth @hasRole(roles: ["ADMIN"])
+  role(id: Int!): Role @auth @hasRole(roles: ["ADMIN"])
+}
+
+type Mutation {
+  assignRole(roleId: Int!, userId: Int!): Boolean!
+    @auth
+    @hasRole(roles: ["ADMIN"])
+  revokeRole(roleId: Int!, userId: Int!): Boolean!
+    @auth
+    @hasRole(roles: ["ADMIN"])
+}
+
+type User {
+  id: ID!
+  email: String!
+  firstName: String!
+  lastName: String!
+  createdAt: DateTime!
+  roles: [Role!]!
+}
+
+type Role {
+  id: ID!
+  label: String!
+}
+
+scalar DateTime
