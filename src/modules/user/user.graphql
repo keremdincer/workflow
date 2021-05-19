@@ -21,11 +21,17 @@ type User {
   lastName: String!
   createdAt: DateTime!
   roles: [Role!]!
+  contacts: [Contact!]!
 }
 
 type Role {
   id: ID!
   label: String!
+}
+
+type Contact {
+  id: ID!
+  telephone: String!
 }
 
 scalar DateTime

@@ -2,33 +2,43 @@ import { Context } from "../../context"
 
 export default {
   Query: {
-    users: (_parent, _args, context: Context) => context.prisma.user.findMany(),
+    users: (_parent, _args, context: Context) =>
+      context.prisma.user.findMany(),
 
-    user: (_parent, { id }, context: Context) => context.prisma.user.findUnique({
-      where: {
-        id
-      }
-    }),
+    user: (_parent, { id }, context: Context) =>
+      context.prisma.user.findUnique({
+        where: {
+          id
+        }
+      }),
 
-    roles: (_parent, _args, context: Context) => context.prisma.role.findMany(),
+    roles: (_parent, _args, context: Context) =>
+      context.prisma.role.findMany(),
 
-    role: (_parent, { id }, context: Context) => context.prisma.role.findUnique({
-      where: {
-        id
-      }
-    })
+    role: (_parent, { id }, context: Context) =>
+      context.prisma.role.findUnique({
+        where: {
+          id
+        }
+      })
   },
 
   User: {
-    roles: (_parent, _args, context: Context) => context.prisma.role.findMany({
-      where: {
-        users: {
-          some: {
-            id: _parent.id
+    roles: (_parent, _args, context: Context) =>
+      context.prisma.role.findMany({
+        where: {
+          users: {
+            some: {
+              id: _parent.id
+            }
           }
         }
-      }
-    })
+      }),
+
+    contacts: (_parent, _args, context: Context) =>
+      context.prisma.contact.findMany({
+        where: { userId: _parent.id }
+      })
   },
 
   Mutation: {
