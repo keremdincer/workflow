@@ -1,0 +1,31 @@
+type Item {
+  id: ID!
+  macAddress: String
+  serialNo: String
+  barcode: String
+  location: String
+  active: Boolean!
+  itemTypeId: Int!
+  itemType: ItemType!
+}
+
+type ItemType {
+  id: ID!
+  name: String!
+}
+
+extend type Query {
+  items: [Item!]!
+  item(id: Int!): Item
+  itemTypes: [ItemType!]!
+  itemType(id: Int!): ItemType
+}
+
+extend type Mutation {
+  createItemType(name: String!): ItemType!
+  updateItemType(id: Int!, name: String!): ItemType!
+  deleteItemType(id: Int!): Boolean!
+
+  deleteItem(id: Int!): Boolean!
+  deleteItems(ids: [Int!]!): Boolean!
+}
