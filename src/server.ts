@@ -5,7 +5,8 @@ import { context } from './context'
 
 const server = new ApolloServer({
   schema: schema,
-  context: context
+  context: context,
+  uploads: false,
 })
 
 server.listen().then(() => {

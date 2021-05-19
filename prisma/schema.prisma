@@ -45,13 +45,10 @@ model Project {
 model Corporation {
   id        Int      @id @default(autoincrement())
   name      String
-  // ???
-  address   String
-  city      String
-  district  String
-  // ???
   project   Project? @relation(fields: [projectId], references: [id])
   projectId Int?
+
+  branches Branch[]
 
   // Hangi ürün tiplerinin faturalandırılabileceği
   billableItemTypes ItemType[]
@@ -67,6 +64,9 @@ model Branch {
   // ???
   users    User[]
   exports  Export[]
+
+  corporation   Corporation @relation(fields: [corporationId], references: [id])
+  corporationId Int
 }
 
 model Contact {
@@ -100,6 +100,7 @@ model Shipping {
 
 model ItemType {
   id    Int    @id @default(autoincrement())
+  name  String
   items Item[]
 
   // Ürün tipinin faturalandırılabildiği firmalar.
