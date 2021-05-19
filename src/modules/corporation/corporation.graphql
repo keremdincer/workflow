@@ -1,0 +1,51 @@
+extend type Query {
+  corporations: [Corporation!]!
+  corporation(id: Int!): Corporation
+  branch(id: Int!): Branch
+}
+
+extend type Project {
+  corporations: [Corporation!]!
+}
+
+extend type Mutation {
+  createCorporation(name: String!): Corporation!
+  updateCorporation(id: Int!, name: String!): Corporation!
+  deleteCorporation(id: Int!): Boolean!
+
+  createBranch(data: CreateBranchInput!): Branch!
+  updateBranch(id: Int!, data: UpdateBranchInput!): Branch!
+  deleteBranch(id: Int!): Boolean!
+}
+
+type Corporation {
+  id: ID!
+  name: String!
+  branches: [Branch!]!
+}
+
+type Branch {
+  id: ID!
+  name: String!
+  address: String!
+  city: String!
+  district: String!
+  corporationId: Int!
+  corporation: Corporation!
+  users: [User!]!
+}
+
+input CreateBranchInput {
+  corporationId: Int!
+  name: String!
+  address: String!
+  city: String!
+  district: String!
+}
+
+input UpdateBranchInput {
+  name: String!
+  address: String!
+  city: String!
+  district: String!
+}
