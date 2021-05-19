@@ -1,0 +1,18 @@
+extend type Query {
+  projects: [Project!]!
+  project(id: Int!): Project
+}
+
+extend type Mutation {
+  createProject(name: String!): Project!
+  updateProject(id: Int!, name: String!): Project!
+  deleteProject(id: Int!): Boolean!
+  assignUserToProject(projectId: Int!, userId: Int!): Boolean!
+  dismissUserFromProject(projectId: Int!, userId: Int!): Boolean!
+}
+
+type Project {
+  id: ID!
+  name: String!
+  users: [User!]!
+}
