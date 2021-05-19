@@ -1,0 +1,62 @@
+type Export {
+  id: ID!
+  reservationNo: Int!
+  type: String
+  branchId: Int!
+  branch: Branch
+  closedAt: DateTime
+  createdAt: DateTime
+  items: [Item!]!
+  shippings: [Shipping!]!
+}
+
+type Shipping {
+  id: Int!
+  shippingNo: Int!
+  type: String!
+  status: String!
+  createdAt: DateTime
+  exportId: Int!
+  export: Export!
+}
+
+extend type Branch {
+  exports: [Export!]!
+}
+
+extend type Query {
+  exports: [Export!]!
+  export(id: Int!): Export
+  exportsByReservation(reservationNo: Int!): [Export!]!
+
+  shippings: [Shipping!]!
+  shipping(id: Int!): Shipping
+}
+
+extend type Mutation {
+  createExport(data: CreateExportInput): Export!
+  updateExport(id: Int!, type: String!, branchId: Int!): Export!
+  deleteExport(id: Int!): Boolean!
+
+  createShipping(data: ShippingInput!): Shipping!
+  updateShipping(id: Int!, data: ShippingInput!): Shipping!
+  deleteShipping(id: Int!): Boolean!
+}
+
+input CreateExportInput {
+  reservationNo: Int!
+  type: String!
+  branchId: Int!
+  items: [ExportItem!]!
+}
+
+input ExportItem {
+  itemTypeId: Int!
+  itemCount: Int!
+}
+
+input ShippingInput {
+  shippingNo: Int!
+  type: String!
+  exportId: Int!
+}
