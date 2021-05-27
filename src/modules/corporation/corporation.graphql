@@ -13,6 +13,9 @@ extend type Mutation {
   updateCorporation(id: Int!, name: String!): Corporation!
   deleteCorporation(id: Int!): Boolean!
 
+  assignCorporationToProject(corporationId: Int!, projectId: Int!): Boolean!
+  dismissCorporationFromProject(corporationId: Int!, projectId: Int!): Boolean!
+
   createBranch(data: CreateBranchInput!): Branch!
   updateBranch(id: Int!, data: UpdateBranchInput!): Branch!
   deleteBranch(id: Int!): Boolean!

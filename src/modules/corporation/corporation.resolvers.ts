@@ -18,9 +18,13 @@ export default {
 
   Project: {
     corporations: (parent, _args, context: Context) =>
-      context.prisma.corporation.findUnique({
+      context.prisma.corporation.findMany({
         where: {
-          id: parent.id,
+          projects: {
+            some: {
+              id: parent.id,
+            },
+          },
         },
       }),
   },
@@ -71,5 +75,29 @@ export default {
       context.prisma.branch.delete({
         where: { id },
       }),
+
+    assignCorporationToProject: async (
+      _parent,
+      { corporationId, projectId },
+      context: Context
+    ) => {
+      await context.prisma.project.update({
+        where: { id: projectId },
+        data: { corporations: { connect: { id: corporationId } } },
+      })
+      return true
+    },
+
+    dismissCorporationFromProject: async (
+      _parent,
+      { corporationId, projectId },
+      context: Context
+    ) => {
+      await context.prisma.project.update({
+        where: { id: projectId },
+        data: { corporations: { disconnect: { id: corporationId } } },
+      })
+      return true
+    },
   },
 }
