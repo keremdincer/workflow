@@ -1,21 +1,22 @@
-import { AuthenticationError, UserInputError } from 'apollo-server-errors';
-import { compare, hash } from 'bcrypt';
-import { sign, verify } from 'jsonwebtoken';
-import { Context } from '../../context';
+import { AuthenticationError, UserInputError } from 'apollo-server-errors'
+import { compare, hash } from 'bcrypt'
+import { sign, verify } from 'jsonwebtoken'
+import { Context } from '../../context'
 
 export default {
   Query: {
-    me: (_parent, _args, context: Context) => context.prisma.user.findUnique({
-      where: {
-        email: context.currentUser?.email
-      }
-    }),
+    me: (_parent, _args, context: Context) =>
+      context.prisma.user.findUnique({
+        where: {
+          email: context.currentUser?.email,
+        },
+      }),
   },
 
   Mutation: {
     login: async (_parent, { email, password }, context: Context) => {
       const user = await context.prisma.user.findUnique({
-        where: { email: email }
+        where: { email: email },
       })
 
       if (!user) {
@@ -27,28 +28,26 @@ export default {
           accessToken: sign(
             {
               id: user.id,
-              email: user.email
+              email: user.email,
             },
             process.env.JWT_SECRET!,
             {
-              expiresIn: '15m'
+              expiresIn: '15m',
             }
           ),
           refreshToken: sign(
             {
               id: user.id,
-              signature: user.signature
+              signature: user.signature,
             },
             process.env.JWT_SECRET!,
             {
-              expiresIn: '1d'
+              expiresIn: '1d',
             }
           ),
         }
-      }
-
-      else {
-        throw new UserInputError('Password mismatch.')
+      } else {
+        throw new UserInputError('Kullanıcı adı ya da şifre yanlış.')
       }
     },
 
@@ -60,8 +59,8 @@ export default {
           email,
           password: await hash(password, 4),
           firstName,
-          lastName
-        }
+          lastName,
+        },
       })
 
       return user
@@ -77,8 +76,8 @@ export default {
 
       const user = await context.prisma.user.findUnique({
         where: {
-          id: userData.id
-        }
+          id: userData.id,
+        },
       })
 
       if (!user) {
@@ -93,24 +92,24 @@ export default {
         accessToken: sign(
           {
             id: user.id,
-            email: user.email
+            email: user.email,
           },
           process.env.JWT_SECRET!,
           {
-            expiresIn: '15m'
+            expiresIn: '15m',
           }
         ),
         refreshToken: sign(
           {
             id: user.id,
-            signature: user.signature
+            signature: user.signature,
           },
           process.env.JWT_SECRET!,
           {
-            expiresIn: '1d'
+            expiresIn: '1d',
           }
         ),
       }
-    }
-  }
+    },
+  },
 }

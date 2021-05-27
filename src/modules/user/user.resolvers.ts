@@ -1,44 +1,42 @@
-import { Context } from "../../context"
+import { Context } from '../../context'
 
 export default {
   Query: {
-    users: (_parent, _args, context: Context) =>
-      context.prisma.user.findMany(),
+    users: (_parent, _args, context: Context) => context.prisma.user.findMany(),
 
     user: (_parent, { id }, context: Context) =>
       context.prisma.user.findUnique({
         where: {
-          id
-        }
+          id,
+        },
       }),
 
-    roles: (_parent, _args, context: Context) =>
-      context.prisma.role.findMany(),
+    roles: (_parent, _args, context: Context) => context.prisma.role.findMany(),
 
     role: (_parent, { id }, context: Context) =>
       context.prisma.role.findUnique({
         where: {
-          id
-        }
-      })
+          id,
+        },
+      }),
   },
 
   User: {
-    roles: (_parent, _args, context: Context) =>
+    roles: (parent, _args, context: Context) =>
       context.prisma.role.findMany({
         where: {
           users: {
             some: {
-              id: _parent.id
-            }
-          }
-        }
+              id: parent.id,
+            },
+          },
+        },
       }),
 
-    contacts: (_parent, _args, context: Context) =>
+    contacts: (parent, _args, context: Context) =>
       context.prisma.contact.findMany({
-        where: { userId: _parent.id }
-      })
+        where: { userId: parent.id },
+      }),
   },
 
   Mutation: {
@@ -48,10 +46,10 @@ export default {
         data: {
           roles: {
             connect: {
-              id: roleId
-            }
-          }
-        }
+              id: roleId,
+            },
+          },
+        },
       })
 
       return true
@@ -63,13 +61,13 @@ export default {
         data: {
           roles: {
             disconnect: {
-              id: roleId
-            }
-          }
-        }
+              id: roleId,
+            },
+          },
+        },
       })
 
       return true
-    }
-  }
+    },
+  },
 }
