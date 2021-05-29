@@ -20,7 +20,7 @@ export default {
       })
 
       if (!user) {
-        throw new UserInputError('User not found.')
+        throw new UserInputError('Kullanıcı adı ya da şifre yanlış.')
       }
 
       if (await compare(password, user.password)) {
