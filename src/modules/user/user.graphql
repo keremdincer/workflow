@@ -21,6 +21,7 @@ type User {
   lastName: String!
   createdAt: DateTime!
   roles: [Role!]!
+  active: Boolean! @hasRole(roles: ["ADMIN"])
   contacts: [Contact!]!
 }
 
